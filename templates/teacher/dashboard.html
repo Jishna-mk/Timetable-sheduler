@@ -65,12 +65,16 @@
     </div>
   </header><!-- #header -->
 {%block content%}
+<h2 class="text-center">Welcome, {{ request.user.username }}!</h2>
+<p class="text-center">This is your teacher dashboard. Add your content here.</p>
 
-      <h2 class="text-center">Welcome, {{ request.user.username }}!</h2>
-      <p class="text-center">This is your teacher dashboard. Add your content here.</p>
-
-      <h2 class="text-center mt-4 mb-4">Your Timetable</h2>
+<h2 class="text-center mt-4 mb-4">Your Timetable</h2>
 <div class="container">
+    <h3 class="text-center">Subjects Taught:</h3>
+    <ul class="list-unstyled text-center">
+        <li>{{ request.user.teacher.subject_taught1 }}</li>
+        <li>{{ request.user.teacher.subject_taught2 }}</li>
+    </ul>
     <table class="table table-bordered table-striped text-center">
         <tr>
             <th>Day</th>
@@ -88,8 +92,7 @@
         {% endfor %}
     </table>
 </div>
-
-    {%endblock%}
+      {%endblock%}
     <!--==========================
       Footer
     ============================-->

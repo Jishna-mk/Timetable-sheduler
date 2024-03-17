@@ -1,8 +1,7 @@
-{%extends "index.html"%}
-{%load static%}
-{%block content%}
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
 <style>
-    
     .form-group {
         margin-bottom: 1.5rem;
     }
@@ -26,9 +25,9 @@
         color: #dc3545;
     }
     .btn-primary {
-        width: auto; 
+        width: auto;
     }
-   
+
     input[type="text"],
     input[type="email"],
     input[type="password"],
@@ -43,92 +42,99 @@
                 <h2 class="text-center mb-4">Teacher Register</h2>
                 <form method="post">
                     {% csrf_token %}
-                <div class="row">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name:</label>
-                        {{ form.first_name }}
-                        {% if form.first_name.errors %}
-                            <div class="invalid-feedback d-block">
-                                {{ form.first_name.errors.0 }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name:</label>
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.first_name.errors.0 }}
+                                    </div>
+                                {% endif %}
                             </div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name:</label>
-                        {{ form.last_name }}
-                        {% if form.last_name.errors %}
-                            <div class="invalid-feedback d-block">
-                                {{ form.last_name.errors.0 }}
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-                </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                    <label for="{{ form.username.id_for_label }}" class="form-label">Username:</label>
-                    {{ form.username }}
-                    {% if form.username.errors %}
-                        <div class="invalid-feedback d-block">
-                            {{ form.username.errors.0 }}
                         </div>
-                    {% endif %}
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="{{ form.email.id_for_label }}" class="form-label">Email:</label>
-                        {{ form.email }}
-                        {% if form.email.errors %}
-                            <div class="invalid-feedback d-block">
-                                {{ form.email.errors.0 }}
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name:</label>
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.last_name.errors.0 }}
+                                    </div>
+                                {% endif %}
                             </div>
-                        {% endif %}
+                        </div>
                     </div>
-                    
-                </div>  
-            </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.username.id_for_label }}" class="form-label">Username:</label>
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.username.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.email.id_for_label }}" class="form-label">Email:</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.email.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row">
                         <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.password1.id_for_label }}" class="form-label">Password:</label>
+                                {{ form.password1 }}
+                                {% if form.password1.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.password1.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password:</label>
+                                {{ form.password2 }}
+                                {% if form.password2.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.password2.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="mb-3">
-                        <label for="{{ form.password1.id_for_label }}" class="form-label">Password:</label>
-                        {{ form.password1 }}
-                        {% if form.password1.errors %}
+                        <label for="{{ form.subject_taught1.id_for_label }}" class="form-label">Subject Taught 1:</label>
+                        {{ form.subject_taught1 }}
+                        {% if form.subject_taught1.errors %}
                             <div class="invalid-feedback d-block">
-                                {{ form.password1.errors.0 }}
+                                {{ form.subject_taught1.errors.0 }}
                             </div>
                         {% endif %}
                     </div>
-                    </div>
-                    <div class="col-md-6">
+
                     <div class="mb-3">
-                        <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password:</label>
-                        {{ form.password2 }}
-                        {% if form.password2.errors %}
+                        <label for="{{ form.subject_taught2.id_for_label }}" class="form-label">Subject Taught 2:</label>
+                        {{ form.subject_taught2 }}
+                        {% if form.subject_taught2.errors %}
                             <div class="invalid-feedback d-block">
-                                {{ form.password2.errors.0 }}
+                                {{ form.subject_taught2.errors.0 }}
                             </div>
                         {% endif %}
                     </div>
-                    </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.subject_taught.id_for_label }}" class="form-label">Subject Taught:</label>
-                        {{ form.subject_taught }}
-                        {% if form.subject_taught.errors %}
-                            <div class="invalid-feedback d-block">
-                                {{ form.subject_taught.errors.0 }}
-                            </div>
-                        {% endif %}
-                    </div>
-                    
-                   
 
                     <button type="submit" class="btn btn-primary btn-block">Register</button><br><br>
                     <p>Already have an account? <a href="{% url 'teacher-login' %}">Login</a></p>
@@ -139,4 +145,4 @@
     </div>
 </div>
 
-{%endblock%}
+{% endblock %}

@@ -97,17 +97,38 @@ def generate_timetable_view(request):
 
 
 
+# def display_timetable(request):
+#     user = request.user
+#     if hasattr(user, 'teacher'):
+#         timetable_entries = TimetableEntry.objects.filter(subject=user.teacher.subject_taught1)
+#         timetable_entries = TimetableEntry.objects.filter(subject=user.teacher.subject_taught2)
+        
+#     elif hasattr(user, 'student'):
+#         timetable_entries = TimetableEntry.objects.filter(class_name=user.student.class_name)
+#     else:
+#         timetable_entries = TimetableEntry.objects.all()
+
+    
+#     timetable_by_class = {}
+#     for entry in timetable_entries:
+#         if entry.class_name not in timetable_by_class:
+#             timetable_by_class[entry.class_name] = []
+#         timetable_by_class[entry.class_name].append(entry)
+
+#     context = {'timetable_by_class': timetable_by_class}
+#     return render(request, 'timetable/display_timetable.html', context)
 def display_timetable(request):
     user = request.user
     if hasattr(user, 'teacher'):
-        timetable_entries = TimetableEntry.objects.filter(subject=user.teacher.subject_taught)
+        subject1_timetable_entries = TimetableEntry.objects.filter(subject=user.teacher.subject_taught1)
+        subject2_timetable_entries = TimetableEntry.objects.filter(subject=user.teacher.subject_taught2)
+        timetable_entries = subject1_timetable_entries.union(subject2_timetable_entries)
         
     elif hasattr(user, 'student'):
         timetable_entries = TimetableEntry.objects.filter(class_name=user.student.class_name)
     else:
         timetable_entries = TimetableEntry.objects.all()
 
-    
     timetable_by_class = {}
     for entry in timetable_entries:
         if entry.class_name not in timetable_by_class:

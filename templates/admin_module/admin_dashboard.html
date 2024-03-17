@@ -109,32 +109,34 @@
 
     <h2>Welcome to the Admin Dashboard</h2>
         
-        <h3 class="text-center">Teachers to Approve:</h3>
-        <table class="approval-table">
-            <thead>
+    <h3 class="text-center">Teachers to Approve:</h3>
+    <table class="approval-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Subjects Taught1</th>
+                <th>Subjects Taught2</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teacher in teachers_to_approve %}
                 <tr>
-                    <th>Name</th>
-                    <th>Subject Taught</th>
-                    <th>Action</th>
+                    <td>{{ teacher.user.get_full_name }}</td>
+                    <td>{{ teacher.subject_taught1 }}</td>
+                    <td>{{ teacher.subject_taught2 }}</td>
+                    <td>
+                        <a href="{% url 'approve_teacher' teacher.id %}" class="btn btn-primary">Approve</a>
+                        <form action="{% url 'remove-teacher' teacher.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Remove Teacher</button>
+                        </form>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for teacher in teachers_to_approve %}
-                    <tr>
-                        <td>{{ teacher.user.get_full_name }}</td>
-                        <td>{{ teacher.subject_taught }}</td>
-                        <td>
-                          <a href="{% url 'approve_teacher' teacher.id %}" class="btn btn-primary">Approve</a>
-                          <form action="{% url 'remove-teacher' teacher.id %}" method="post" style="display: inline;">
-                              {% csrf_token %}
-                              <button type="submit" class="btn btn-danger">Remove Teacher</button>
-                          </form>
-                      </td>
-                      
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            {% endfor %}
+        </tbody>
+    </table>
+    
         <br>
         <h3 class="text-center">Students to Approve:</h3>
         <table class="approval-table">
