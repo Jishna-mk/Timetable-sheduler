@@ -1,0 +1,50 @@
+{%extends "admin_module/admin_dashboard.html"%}
+{%load static%}
+{%block content%}
+
+<div class="container col-md-6 mx-auto mt-5 p-5 ">
+  <h2>Available Classes</h2>
+  <div class="row p-5 mt-5" style="box-shadow: rgba(14, 36, 133, 0.35) 0px 5px 15px;">
+
+    
+    <div class="container">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Class Name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for class in classes %}
+            <tr>
+              <td>{{ class.class_name }}</td>
+              <td>
+                <a href="{% url 'edit-class' class.id %}" class="btn btn-secondary">Edit</a>
+                <a href="#" class="btn btn-danger" onclick="confirmDelete('{{ class.class_name}}', '{{ class.id  }}')">Delete</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    <script>
+      function confirmDelete( className,classId) {
+        var confirmDelete = confirm("Are you sure you want to delete " + className + "?");
+        if (confirmDelete) {
+         
+          window.location.href = "{% url 'delete-class' class_id=0 %}".replace('0', classId);
+        }
+      }
+    </script>
+
+
+  
+
+
+  {%endblock%}

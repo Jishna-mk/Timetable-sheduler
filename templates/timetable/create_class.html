@@ -1,0 +1,17 @@
+{%extends "admin_module/admin_dashboard.html"%}
+{%load static%}
+{%block content%}
+
+<div class="container col-md-6 p-5 mt-5" >
+  <div class="row p-5 mt-5" style="box-shadow: #0e248559 0px 5px 15px;">
+
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p}} 
+        <button type="submit" class="btn btn-primary">Create Class</button>
+    </form>
+  </div>
+</div>    
+{%endblock%}
+
+

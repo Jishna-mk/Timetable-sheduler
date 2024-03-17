@@ -1,0 +1,16 @@
+{%extends "admin_module/admin_dashboard.html"%}
+{%load static%}
+{%block content%}
+<div class="container col-md-6 mx-auto mt-5 p-5 ">
+  <h2>Edit Subjects</h2>
+  
+  <div class="row p-5 mt-5" style="box-shadow: rgba(14, 36, 133, 0.35) 0px 5px 15px;">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Update Class</button>
+    </form>
+</div>
+</div>
+{%endblock%}
+

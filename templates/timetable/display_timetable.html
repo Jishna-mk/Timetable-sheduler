@@ -1,0 +1,49 @@
+{% extends "admin_module/admin_dashboard.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="margin-top: 100px;">
+
+    {% for class_name, timetable_entries in timetable_by_class.items %}
+    <h2>Timetable for {{ class_name }}</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Time</th>
+                <th>Subject</th>
+                <th>Lab</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in timetable_entries %}
+                <tr>
+                    <td>{{ entry.day }}</td>
+                    <td>{{ entry.time }}</td>
+                    <td>
+                        {% if entry.subject %}
+                            {{ entry.subject.name }}
+                        {% else %}
+                            No Subject 
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if entry.lab %}
+                            {{ entry.lab.name }} 
+                        {% else %}
+                            No Lab 
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endfor %}
+
+
+
+
+
+
+</div>
+{% endblock %}

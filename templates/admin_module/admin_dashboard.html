@@ -1,0 +1,256 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Timetable management</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+
+  <link href="{%static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="{%static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="{%static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{%static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+  <link href="{%static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
+  <link href="{%static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+  <link href="{%static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="{%static 'css/style.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+    Theme Name: NewBiz
+    Theme URL: https://bootstrapmade.com/newbiz-bootstrap-business-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+</head>
+
+<body>
+
+  <!--==========================
+  Header
+  ============================-->
+  <header id="header" class="fixed-top">
+    <div class="container">
+
+      <div class="logo float-left">
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <h1 class="text-light"><a href="#header"><span>NewBiz</span></a></h1> -->
+        <a href="#intro" class="scrollto"><img src="img/logo.png" alt="" class="img-fluid"></a>
+        Timetable Management
+      </div>
+
+      <nav class="main-nav float-right d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="{%url 'index' %}">Home</a></li>
+         
+          <li><a href="{%url 'create-subject' %}">Create Subject</a></li>
+          <li><a href="{%url 'create-lab' %}">Create Lab</a></li>
+          <li class="drop-down"><a href="">Class</a>
+            <ul>
+              <li><a href="{% url 'create-class' %}">Create Class</a></li>
+              <li><a href="{% url 'view-classes' %}">View Class</a></li>
+
+           </ul>
+          </li>
+         
+          <li><a href="{%url 'generate-timetable' %}">Generate Timetable</a></li>
+        </ul>
+        <ul class="navbar-nav">
+          {% if request.user.is_authenticated %}
+        <li class="navbar-item">
+          <a class="btn btn-primary " href="{% url 'admin-logout' %}" style="width: 100px;">Logout</a>
+        </li>
+        {% else %}
+        <li class="navbar-item">
+          <a class="btn btn-primary" href="{% url 'admin-login' %}" style="width:100px">Login</a>
+        </li>
+        {% endif %}
+      </ul>
+      </nav><!-- .main-nav -->
+      
+    </div>
+  </header>
+{%block content%}
+    <style>
+        .approval-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.approval-table th, .approval-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.approval-table th {
+    background-color: #f2f2f2;
+}
+
+.approval-table tr:hover {
+    background-color: #f5f5f5;
+}
+    </style>
+<div class="container mt-5 " style="height: 500px;">
+
+
+    <h2>Welcome to the Admin Dashboard</h2>
+        
+        <h3 class="text-center">Teachers to Approve:</h3>
+        <table class="approval-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Subject Taught</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teachers_to_approve %}
+                    <tr>
+                        <td>{{ teacher.user.get_full_name }}</td>
+                        <td>{{ teacher.subject_taught }}</td>
+                        <td>
+                          <a href="{% url 'approve_teacher' teacher.id %}" class="btn btn-primary">Approve</a>
+                          <form action="{% url 'remove-teacher' teacher.id %}" method="post" style="display: inline;">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-danger">Remove Teacher</button>
+                          </form>
+                      </td>
+                      
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <h3 class="text-center">Students to Approve:</h3>
+        <table class="approval-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Class</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students_to_approve %}
+                    <tr>
+                        <td>{{ student.user.get_full_name }}</td>
+                        <td>{{ student.class_name }}</td>
+                        <td>
+                          <a href="{% url 'approve_student' student.id %}" class="btn btn-primary">Approve</a>
+                          <form action="{% url 'remove-student' student.id %}" method="post" style="display: inline;">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-danger">Remove Student</button>
+                          </form>
+                      </td>
+                      
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>      
+{%endblock%}
+ <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6 footer-links">
+            <h3>TimelyScheduler</h3>
+            <p>TimelyScheduler is your comprehensive solution for streamlined scheduling and efficient timetable management. Our platform is designed to simplify the complexities of organizing classes, allocating resources, and optimizing schedules for educational institutions and businesses.</p>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Terms of service</a></li>
+              <li><a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Contact Us</h4>
+            <p>
+               
+              Kannur, Kerala<br>
+               India<br>
+              <strong>Phone:</strong> +1 3369 33466 33<br>
+              <strong>Email:</strong> timelyscheduler@example.com<br>
+            </p>
+
+            <div class="social-links">
+              <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+              <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+              <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+              <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+              <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+            </div>
+
+          </div>
+
+          
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>TimelyScheduler</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!--
+          All the links in the footer should remain intact.
+          You can delete the links only if you purchased the pro version.
+          Licensing information: https://bootstrapmade.com/license/
+          Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=NewBiz
+        -->
+        Designed by <a href="#">zionit</a>
+      </div>
+    </div>
+  </footer><!-- #footer -->
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+  <!-- Uncomment below i you want to use a preloader -->
+  <!-- <div id="preloader"></div> -->
+
+  <!-- JavaScript Libraries -->
+  <script src="{%static 'lib/jquery/jquery.min.js' %}"></script>
+  <script src="{%static 'lib/jquery/jquery-migrate.min.js' %}"></script>
+  <script src="{%static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{%static 'lib/easing/easing.min.js' %}"></script>
+  <script src="{%static 'lib/mobile-nav/mobile-nav.js' %}"></script>
+  <script src="{%static 'lib/wow/wow.min.js' %}"></script>
+  <script src="{%static 'lib/waypoints/waypoints.min.js' %}"></script>
+  <script src="{%static 'lib/counterup/counterup.min.js' %}"></script>
+  <script src="{%static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+  <script src="{%static 'lib/isotope/isotope.pkgd.min.js' %}"></script>
+  <script src="{%static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+  <!-- Contact Form JavaScript File -->
+  <script src="{%static 'contactform/contactform.js' %}"></script>
+
+  <!-- Template Main Javascript File -->
+  <script src="{%static 'js/main.js' %}"></script>
+
+</body>
+</html>
