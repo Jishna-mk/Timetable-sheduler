@@ -13,31 +13,42 @@ def generate_timetable(selected_class):
 
     for day in days_of_week:
         for time_slot in time_slots:
-           
-            if random.choice([True, False]): 
+            if random.choice([True, False]):
                 subject = random.choice(subjects)
                 lab = None
             else:
                 subject = None
                 lab = random.choice(labs)
-           
+
+            # If subject is a string, fetch the Subject instance with that name
+            if isinstance(subject, str):
+                subject_instance = Subject.objects.get(name=subject)
+            else:
+                subject_instance = subject
+
             TimetableEntry.objects.create(
                 class_name=selected_class,
                 day=day,
                 time=time_slot,
-                subject=subject,
+                subject=subject_instance,  # Use the Subject instance
                 lab=lab
             )
 
     for teacher in Teacher.objects.all():
         teacher_class = random.choice(Class.objects.all())
-   
-    if teacher.subject_taught in teacher_class.subjects.all():
+
+        # Retrieve the subjects taught by the teacher
+        subjects_taught = [teacher.subject_taught1, teacher.subject_taught2]
+
         for day in days_of_week:
             for time_slot in time_slots:
-                TimetableEntry.objects.create(
-                    class_name=teacher_class,
-                    day=day,
-                    time=time_slot,
-                    subject=teacher.subject_taught
-                )
+                # Randomly select one of the subjects taught by the teacher
+                subject_name = random.choice(subjects_taught)
+                if subject_name:
+                    subject_instance = Subject.objects.get(name=subject_name)
+                    TimetableEntry.objects.create(
+                        class_name=teacher_class,
+                        day=day,
+                        time=time_slot,
+                        subject=subject_instance
+                    )
