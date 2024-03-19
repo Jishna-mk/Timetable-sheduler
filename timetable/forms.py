@@ -1,6 +1,16 @@
 from django import forms
 from .models import Class, Subject,Lab
 
+# class ClassForm(forms.ModelForm):
+#     subjects = forms.ModelMultipleChoiceField(
+#         queryset=Subject.objects.all(),
+#         widget=forms.CheckboxSelectMultiple
+#     )
+    
+#     labs = forms.ModelMultipleChoiceField(
+#         queryset=Lab.objects.all(),
+#         widget=forms.CheckboxSelectMultiple
+#     )
 class ClassForm(forms.ModelForm):
     subjects = forms.ModelMultipleChoiceField(
         queryset=Subject.objects.all(),
@@ -9,9 +19,9 @@ class ClassForm(forms.ModelForm):
     
     labs = forms.ModelMultipleChoiceField(
         queryset=Lab.objects.all(),
-        widget=forms.CheckboxSelectMultiple
+        widget=forms.CheckboxSelectMultiple,
+        required=False  # Make labs field optional
     )
-
     class Meta:
         model = Class
         fields = ['class_name', 'subjects','labs']

@@ -4,6 +4,7 @@ from .forms import ClassForm,SubjectForm, TimetableGenerateForm,LabForm
 from .models import Class,TimetableEntry
 from .generate_timetable import generate_timetable
 from django.http import JsonResponse
+from django.contrib import messages
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -93,6 +94,32 @@ def generate_timetable_view(request):
     context = {'form': form}
     return render(request, 'timetable/generate_timetable.html', context)
 
+# @user_passes_test(lambda u: u.is_superuser)
+# def generate_timetable_view(request):
+#     if request.method == 'POST':
+#         form = TimetableGenerateForm(request.POST)
+#         if form.is_valid():
+#             if form.cleaned_data.get('confirm_generation', False):
+#                 selected_class = form.cleaned_data.get('selected_class')
+#                 if selected_class is not None:
+#                     generate_timetable(selected_class)
+#                     return redirect('display-timetable')
+#                 else:
+#                     # Handle the case where selected_class is None
+#                     # This might occur if the form submission is tampered with
+#                     # or if there's an issue with the form rendering
+#                     messages.error(request, "Invalid selected class.")
+#             else:
+#                 # Handle the case where confirm_generation is False
+#                 messages.warning(request, "Generation not confirmed.")
+#         else:
+#             # Handle the case where form validation fails
+#             messages.error(request, "Form validation failed.")
+#     else:
+#         form = TimetableGenerateForm()
+
+#     context = {'form': form}
+#     return render(request, 'timetable/generate_timetable.html', context)
 
 
 
