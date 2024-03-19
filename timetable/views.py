@@ -68,16 +68,24 @@ def edit_class(request, class_id):
 
 
 
+# @user_passes_test(lambda u: u.is_superuser)
+# def delete_class(request, class_id):
+#     class_instance = get_object_or_404(Class, id=class_id)
+    
+#     if request.method == 'POST':
+#         class_instance.delete()
+#         return JsonResponse({'message': 'Class deleted successfully'})
+
+#     return render(request, 'timetable/view_classes.html', {'class_instance': class_instance})
+
+from django.http import JsonResponse
+
 @user_passes_test(lambda u: u.is_superuser)
 def delete_class(request, class_id):
     class_instance = get_object_or_404(Class, id=class_id)
     
-    if request.method == 'POST':
-        class_instance.delete()
-        return JsonResponse({'message': 'Class deleted successfully'})
-
-    return render(request, 'timetable/view_classes.html', {'class_instance': class_instance})
-
+    class_instance.delete()
+    return JsonResponse({'message': 'Class deleted successfully'})
 
 
 @user_passes_test(lambda u: u.is_superuser)
